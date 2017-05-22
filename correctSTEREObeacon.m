@@ -12,7 +12,7 @@ jdnow = jd2000_new(yyyy,mm,dd,utct);
 % NN = 2;
 % jdthen = jdnow - NN/24;
 
-d = 1;
+d = 0;
 
 impactfiles=dir([sprintf('./data/impact/*%s%02d%02d',num2str(yyyy),mm,dd-d) '*.cdf']);
 plasticfiles=dir([sprintf('./data/plastic/*%s%02d%02d',num2str(yyyy),mm,dd-d) '*.cdf']);
@@ -73,11 +73,11 @@ HEEQindex = find(HEEQdoy == doy);HEEindex = find(HEEdoy == doy);
 
 rm = sqrt((HEEQxkm(HEEQindex(1))*1000)^2 + (HEEQykm(HEEQindex(1))*1000)^2 + (HEEQzkm(HEEQindex(1))*1000)^2);
 
-HEEQlatm = atan((HEEQzkm(HEEQindex(1))*1000)/(sqrt((HEEQxkm(HEEQindex(1))*1000)^2 + (HEEQykm(HEEQindex(1))*1000)^2)));
-HEEQlonm = atan2((HEEQykm(HEEQindex(1))*1000),(HEEQxkm(HEEQindex(1))*1000));
+HEEQlatm = rad2deg(atan((HEEQzkm(HEEQindex(1))*1000)/(sqrt((HEEQxkm(HEEQindex(1))*1000)^2 + (HEEQykm(HEEQindex(1))*1000)^2))));
+HEEQlonm = rad2deg(atan2((HEEQykm(HEEQindex(1))*1000),(HEEQxkm(HEEQindex(1))*1000)));
 
-HEElatm = atan((HEEzkm(HEEindex(1))*1000)/(sqrt((HEExkm(HEEindex(1))*1000)^2 + (HEEykm(HEEindex(1))*1000)^2)));
-HEElonm = atan2((HEEykm(HEEindex(1))*1000),(HEExkm(HEEindex(1))*1000));
+HEElatm = rad2deg(atan((HEEzkm(HEEindex(1))*1000)/(sqrt((HEExkm(HEEindex(1))*1000)^2 + (HEEykm(HEEindex(1))*1000)^2))));
+HEElonm = rad2deg(atan2((HEEykm(HEEindex(1))*1000),(HEExkm(HEEindex(1))*1000)));
 
 save(sprintf('./data/STEABeacon_%s%02d%02d.mat',num2str(yyyy),mm,dd-d),'jd2000','vm','Nm','Tm','Bxm','Bym','Bzm','rm','HEEQlonm','HEEQlatm','HEElonm','HEElatm');
 % [jds,vm,Nm,Tm,Bxm,Bym,Bzm,rm,HEEQlonm,HEEQlatm,HEElonm,HEElatm] = getSTEREOlastN(jd0,NN,sat)

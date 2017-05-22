@@ -3,6 +3,13 @@ function [jds,vm,Nm,Tm,Bxm,Bym,Bzm,rm,HEEQlonm,HEEQlatm,HEElonm,HEElatm] = getST
 jds=NaN;vm=NaN;Nm=NaN;Tm=NaN;Bxm=NaN;Bym=NaN;Bzm=NaN;rm=NaN; 
 HEEQlonm=NaN;HEEQlatm=NaN;HEElonm=NaN;HEElatm=NaN;
 
+if jd0 == 0
+    [yyyy,mm,dd] = ymd(datetime('now','TimeZone','UTC'));
+    [h,m,s]=hms(datetime('now','TimeZone','UTC'));
+    utct = h + m/60;
+    jd0 = jd2000_new(yyyy,mm,dd,utct);
+%     doy = day(datetime('now','TimeZone','UTC'),'dayofyear');
+end
 % jd0 = 6.3472e+03;%jd2000(300);
 % NN = 5;
 

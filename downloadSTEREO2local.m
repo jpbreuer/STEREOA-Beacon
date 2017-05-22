@@ -24,15 +24,14 @@ close(nasaserv);
 pospath = '/pub/stereo/Position/ahead/';
 posfiles = {sprintf('position_ahead_%s_HEEQ.txt',num2str(yyyy)),sprintf('position_ahead_%s_HEE.txt',num2str(yyyy))};
 
-if exist(['./pos/' posfiles{1}], 'file') == 0
-    caltechserv = ftp('mussel.srl.caltech.edu:21');
-    cd(caltechserv, pospath);
-    mget(caltechserv,posfiles{1},'./pos');
-    close(caltechserv);
-end
-if exist(['./pos/' posfiles{2}], 'file') == 0
-    caltechserv = ftp('mussel.srl.caltech.edu:21');
-    cd(caltechserv, pospath);
-    mget(caltechserv,posfiles{2},'./pos');
-    close(caltechserv);
-end
+% if exist(['./pos/' posfiles{1}], 'file') == 0
+caltechserv = ftp('mussel.srl.caltech.edu:21');
+cd(caltechserv, pospath);
+mget(caltechserv,posfiles{1},'./pos');
+close(caltechserv);
+
+caltechserv = ftp('mussel.srl.caltech.edu:21');
+cd(caltechserv, pospath);
+mget(caltechserv,posfiles{2},'./pos');
+close(caltechserv);
+% end

@@ -1,10 +1,17 @@
-% function [jds,vm,Nm,Tm,Bxm,Bym,Bzm,rm,HEEQlonm,HEEQlatm,HEElonm,HEElatm] = getSTEREOABeaconlastN(jd0,NN)
-% 
-% jds=NaN;vm=NaN;Nm=NaN;Tm=NaN;Bxm=NaN;Bym=NaN;Bzm=NaN;rm=NaN; HEEQlonm=NaN;
-% HEEQlatm=NaN;HEElonm=NaN;HEElatm=NaN;
+function [jds,vm,Nm,Tm,Bxm,Bym,Bzm,rm,HEEQlonm,HEEQlatm,HEElonm,HEElatm] = getSTEREOABeaconlastN(jd0,NN)
+% % 
+jds=NaN;vm=NaN;Nm=NaN;Tm=NaN;Bxm=NaN;Bym=NaN;Bzm=NaN;rm=NaN; 
+HEEQlonm=NaN;HEEQlatm=NaN;HEElonm=NaN;HEElatm=NaN;
 
-jd0 = 6.3472e+03;%jd2000(300);
-NN = 30;
+if jd0 == 0
+    [yyyy,mm,dd] = ymd(datetime('now','TimeZone','UTC'));
+    [h,m,s]=hms(datetime('now','TimeZone','UTC'));
+    utct = h + m/60;
+    jdnow = jd2000_new(yyyy,mm,dd,utct);
+%     doy = day(datetime('now','TimeZone','UTC'),'dayofyear');
+end
+% jd0 = 6.3472e+03;%jd2000(300);
+% NN = 5;
 
 [startyear,startmonth,startday,starttime]=jd2date(jd0-NN/24);
 [endyear,endmonth,endday,endtime]=jd2date(jd0);
@@ -20,7 +27,7 @@ if totaldays == 0
     Data{1} = load(filename);
 else
     counter = 0;
-    for days = 1:totaldays
+    for days = 1:totaldays+1
         [yyyy,mm,dd,utc] = jd2date((jd0+counter)-NN/24);
         counter = counter+1;
         FileData = load(sprintf('./data/STEABeacon_%s%02d%02d.mat',num2str(yyyy),mm,dd));
@@ -47,30 +54,16 @@ HEEQlonm = combineddata.HEEQlonm;
 HEElatm = combineddata.HEElatm;
 HEElonm = combineddata.HEElonm;
 
-ii = find(jd2000 >=
-
-% combineddata.(fieldNames{i})=[data1.(fieldNames{i}); data2.(fieldNames{i}); data3.(fieldNames{i})];
-
-
-% if startyear == endyear
-%     if startmonth == endmonth
-%         if startday == endday
-%             filename = sprintf('./data/STEABeacon_%s%02d%02d.mat',num2str(startyear),startmonth,startday);
-%         else
-%             counter = 0;
-%             for days = startday:endday
-%                 counter = counter+1;
-%                 FileData = load(sprintf('./data/STEABeacon_%s%02d%02d.mat',num2str(startyear),startmonth,days));
-%                 Data{counter} = FileData;
-%             end
-%             DataM = cat(1, Data{:});
-%         end
-%     else
-%         counter = 0;
-%         for months = startmonth:endmonth
-%             for days = startday:
-
-%                 filenames = sprintf('./data/STEABeacon_%s%02d%02d.mat',num2str(startyear),startmonth,days);
-
-    
-
+ii = find(jd2000 >= jd0-NN/24 & jd2000 <= jd0);
+jds = jd2000(ii);
+vm = vm(ii);
+Nm = Nm(ii);
+Tm = Tm(ii);
+Bxm = Bxm(ii);
+Bym = Bym(ii);
+Bzm = Bzm(ii);
+rm = rm(1);
+HEEQlonm = HEEQlonm(1);
+HEEQlatm = HEEQlatm(1);
+HEElonm = HEElonm(1);
+HEElatm = HEElatm(1);
