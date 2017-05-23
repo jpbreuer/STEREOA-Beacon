@@ -12,7 +12,7 @@ jdnow = jd2000_new(yyyy,mm,dd,utct);
 % NN = 2;
 % jdthen = jdnow - NN/24;
 
-d = 0;
+d = 1;
 
 impactfiles=dir([sprintf('./data/impact/*%s%02d%02d',num2str(yyyy),mm,dd-d) '*.cdf']);
 plasticfiles=dir([sprintf('./data/plastic/*%s%02d%02d',num2str(yyyy),mm,dd-d) '*.cdf']);

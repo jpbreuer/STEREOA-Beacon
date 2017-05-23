@@ -4,6 +4,7 @@ clear all;clc
 % [h,m,s] = hms(datetime('now'));
 
 d1 = datenum('2017-01-01','yyyy-mm-dd');
+% d1 = datenum('2017-05-21','yyyy-mm-dd');
 d2 = datenum(datetime('today','TimeZone','UTC'));
 d = d1:d2;
 
